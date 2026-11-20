@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FoodBridge</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6f1;--sf:#fff;--ink:#18241c;--mu:#56655b;--ln:#d6ded3;--br:#16603f;--brink:#fff;--brs:#e0efe6;--ac:#f2b01e;--acink:#2a1d00;--bad:#b3372b;--bads:#f8e1de;--wn:#7a4f00;--wns:#fbefd0;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101713;--sf:#18221b;--ink:#e8f0ea;--mu:#9bb0a1;--ln:#2a382e;--br:#5fc08a;--brink:#08150e;--brs:#1b3326;--bad:#f08a7e;--bads:#3a1d1a;--wn:#f0c15a;--wns:#3a2e10;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101713;--sf:#18221b;--ink:#e8f0ea;--mu:#9bb0a1;--ln:#2a382e;--br:#5fc08a;--brink:#08150e;--brs:#1b3326;--bad:#f08a7e;--bads:#3a1d1a;--wn:#f0c15a;--wns:#3a2e10;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font:16px/1.5 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sf)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--sf);border-bottom:1px solid var(--ln)}
+.in{max-width:920px;margin:auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.logo{font-size:1.35rem;font-weight:800;letter-spacing:-.02em;text-decoration:underline var(--ac) .18em;text-underline-offset:.1em}
+nav{display:flex;gap:4px}nav a{padding:6px 14px;border-radius:99px;color:var(--mu);text-decoration:none;font-weight:600}
+nav a[aria-current=page]{background:var(--ink);color:var(--bg)}
+main{max-width:920px;margin:auto;padding:22px 16px 40px}
+h1{font-size:clamp(1.8rem,5.5vw,2.8rem);line-height:1.08;letter-spacing:-.03em;font-weight:800;margin:0 0 .3em;max-width:20ch}
+h2{margin:0 0 .2em;font-size:1.5rem;letter-spacing:-.02em}h3{margin:0;font-size:1.1rem}p{margin:.2em 0}.mu{color:var(--mu)}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:16px}
+.g2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));margin-top:18px}
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:12px}
+input,select,textarea{display:block;width:100%;margin-top:4px;padding:10px 12px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+textarea{resize:vertical}:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+button{font:inherit;font-weight:700;padding:10px 16px;border:0;border-radius:10px;background:var(--br);color:var(--brink);cursor:pointer}
+button:disabled{opacity:.4;cursor:not-allowed}button.ghost{background:transparent;color:var(--br);border:1px solid var(--ln)}
+#ai{border-left:6px solid var(--ac)}.vd{font-weight:800;padding:8px 12px;border-radius:10px;margin-bottom:12px}
+.vd.ok{background:var(--brs);color:var(--br)}.vd.warn{background:var(--wns);color:var(--wn)}.vd.bad{background:var(--bads);color:var(--bad)}
+dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0}dt{color:var(--mu)}dd{margin:0;font-weight:600}
+dd input{width:90px;margin:0;padding:4px 8px}.nt{padding-left:18px;color:var(--mu);margin:12px 0}
+.ch{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.ch i{font-style:normal;font-size:.78rem;padding:2px 10px;border-radius:99px;border:1px solid var(--ln)}
+.ch i.al{background:var(--wns);color:var(--wn);border-color:transparent}.ch i.ok{color:var(--br)}.ch i.no{color:var(--bad)}
+.ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:16px 0 4px}
+.lc{display:grid;grid-template-columns:92px 1fr;gap:14px;background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:14px;margin-bottom:12px}
+.tag{background:var(--ac);color:var(--acink);border-radius:14px 14px 14px 4px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px;line-height:1.1}
+.tag b{font-size:1.8rem;font-weight:800}.tag span{font-size:.72rem;font-weight:600}.tag.off{background:var(--brs);color:var(--br)}
+.st{display:flex;gap:4px;margin:8px 0}.st span{flex:1;height:6px;border-radius:3px;background:var(--ln)}.st span.on{background:var(--br)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.done{color:var(--br);font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0}
+.stat b{display:block;font-size:2.1rem;font-weight:800;letter-spacing:-.02em}.stat span{color:var(--mu);font-size:.9rem}
+.bar{display:grid;grid-template-columns:90px 1fr 24px;gap:10px;align-items:center;margin:10px 0}
+.bar div{background:var(--ln);height:10px;border-radius:5px;overflow:hidden}.bar i{display:block;height:100%;background:var(--br)}
+footer{margin-top:28px;font-size:.85rem;color:var(--mu)}footer button{padding:6px 12px;margin-top:8px}
+@media(max-width:420px){.lc{grid-template-columns:1fr}.tag{flex-direction:row;gap:10px;justify-content:flex-start}}
+nav{flex-wrap:wrap}@media(max-width:520px){nav a{padding:5px 10px;font-size:.9rem}}
+.hero{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:center;background:var(--brs);border-radius:24px;padding:28px}
+.hero h1{max-width:16ch}.lead{font-size:1.1rem;max-width:42ch}
+.art{width:100%;max-width:340px;justify-self:center}.art .b{fill:var(--br)}.art .y{fill:var(--ac)}.art .l{stroke:var(--ac);fill:none;stroke-width:10;stroke-linecap:round}.art .g{stroke:var(--br);stroke-width:3;opacity:.4}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{display:inline-block;padding:11px 18px;border-radius:10px;background:var(--br);color:var(--brink);font-weight:700;text-decoration:none}.btn.ghost{background:transparent;color:var(--br);border:1px solid var(--br)}
+.ic{width:46px;height:46px;border-radius:14px;background:var(--brs);color:var(--br);display:grid;place-items:center}.ic svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sec{margin:32px 0 12px}.stat{border-top:5px solid var(--ac)}
+.how{list-style:none;margin:0;padding:0;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));counter-reset:s}
+.how li{position:relative;background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:16px;counter-increment:s}
+.how li::after{content:counter(s);position:absolute;top:12px;right:16px;font-weight:800;font-size:1.7rem;color:var(--ac)}.how h3,.role h3{margin:12px 0 4px}
+.roles{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.role{display:block;color:inherit;text-decoration:none;background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:16px;transition:transform .15s,border-color .15s}
+.role:hover{transform:translateY(-3px);border-color:var(--br)}@media(prefers-reduced-motion:reduce){.role{transition:none}.role:hover{transform:none}}
+</style></head><body>
+<header><div class="in"><span class="logo"><svg width="22" height="22" viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:6px" fill="none" stroke="var(--br)" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M2 19Q12 1 22 19"/></svg>FoodBridge</span><nav><a href="#home">Home</a><a href="#donate">Donor</a><a href="#listings">NGO</a><a href="#volunteer">Volunteer</a><a href="#impact">Impact</a></nav></div></header>
+<main>
+<section id="v-home">
+<div class="hero"><div><h1>Good food should reach a plate, not a bin.</h1><p class="lead mu">FoodBridge links kitchens that have surplus food with shelters that can serve it, and volunteers who carry it across.</p><div class="cta"><a class="btn" href="#donate">Donate food</a><a class="btn ghost" href="#listings">Find food for my shelter</a></div></div>
+<svg class="art" viewBox="0 0 320 220" role="img" aria-label="Food crossing a bridge from a kitchen to a shelter"><path class="g" d="M0 196H320"/><path class="l" d="M40 150Q160 20 280 150"/><rect class="b" x="14" y="140" width="52" height="56" rx="6"/><circle class="y" cx="40" cy="168" r="10"/><rect class="b" x="254" y="120" width="56" height="76" rx="6"/><path class="y" d="M254 120l28-26 28 26z"/><circle class="b" cx="100" cy="101" r="9"/><circle class="y" cx="160" cy="85" r="9" stroke="var(--brs)" stroke-width="3"/><circle class="b" cx="220" cy="101" r="9"/></svg></div>
+<div class="stats" id="hs" style="margin-top:20px"></div>
+<h2 class="sec">How it works</h2>
+<ol class="how"><li><span class="ic" data-i="pen"></span><h3>Describe the food</h3><p class="mu">The assistant reads quantity, type and allergens, and sets a safe-by time.</p></li><li><span class="ic" data-i="search"></span><h3>Get matched</h3><p class="mu">NGOs see listings ranked by distance, timing, capacity and food type.</p></li><li><span class="ic" data-i="check"></span><h3>Confirm the handover</h3><p class="mu">The donor approves or declines each request. Once approved, a volunteer takes the pickup.</p></li><li><span class="ic" data-i="heart"></span><h3>Meals delivered</h3><p class="mu">Only confirmed deliveries count toward the impact numbers.</p></li></ol>
+<h2 class="sec">Choose your role</h2>
+<div class="roles"><a class="role" href="#donate"><span class="ic" data-i="utensils"></span><h3>I have food to give</h3><p class="mu">Register once, describe the food in a sentence, and the assistant checks it is safe and lists it.</p></a><a class="role" href="#listings"><span class="ic" data-i="home"></span><h3>I run a shelter or kitchen</h3><p class="mu">See ranked matches for your location and request what fits.</p></a><a class="role" href="#volunteer"><span class="ic" data-i="user"></span><h3>I can carry food</h3><p class="mu">Register, then pick up confirmed donations and mark them delivered.</p></a></div></section>
+<section id="v-donate">
+<details class="card" id="dreg" style="margin-bottom:18px"><summary id="dsum" style="font-weight:700;cursor:pointer">Register as a donor</summary><div style="margin-top:14px"><label>Name or kitchen<input id="drn" autocomplete="organization"></label><label>Phone<input id="drp" type="tel" autocomplete="tel"></label><label>Pickup area<select id="dra"></select></label><p id="drerr" role="alert" style="color:var(--bad);font-weight:600;margin:0 0 8px"></p><button id="drg" type="button">Save and register</button></div></details>
+<h1>Got surplus food? Tell us in one sentence.</h1>
+<p class="mu">Write it the way you’d text a friend. The assistant reads the quantity, food type, allergens and how long the food stays safe, as you type.</p>
+<div class="g2">
+<div class="card">
+<label>Your name or kitchen<input id="dn" placeholder="Sunrise Hostel Mess" autocomplete="organization"></label>
+<label>Phone for pickup<input id="dp" type="tel" placeholder="98765 43210" autocomplete="tel"></label>
+<label>Pickup area<select id="da"></select></label>
+<label>What are you donating?<textarea id="dt" rows="5" placeholder="40 plates of veg biryani and raita, cooked 1 hour ago"></textarea></label>
+<button class="ghost" id="ex" type="button">Fill an example</button>
+</div>
+<div class="card" id="ai" aria-live="polite"></div>
+</div>
+<h2 class="sec">Waiting on you</h2><p class="mu">NGO requests to confirm or decline, plus donations already on their way.</p><div id="dlist" style="margin-top:14px"></div></section>
+<section id="v-listings" hidden>
+<details class="card" id="reg"><summary style="font-weight:700;cursor:pointer">Register your shelter or kitchen</summary><div style="margin-top:14px"><label>Organization name<input id="rn" autocomplete="organization"></label><label>Area<select id="ra"></select></label><label>Phone<input id="rp" type="tel" autocomplete="tel"></label><label>Meals you can take per pickup<input id="rc" type="number" min="1" value="50"></label><fieldset style="border:1px solid var(--ln);border-radius:10px;margin:0 0 12px"><legend>Food you accept</legend><div id="rk"></div></fieldset><p id="rerr" role="alert" style="color:var(--bad);font-weight:600;margin:0 0 8px"></p><button id="rg" type="button">Register</button></div></details>
+<h2 class="sec">Available food</h2><p class="mu" id="ninfo"></p>
+<div class="ctl"><label>Viewing as<select id="ngo"></select></label><label>Search<input id="q" type="search" placeholder="rice, bread, East Market"></label></div>
+<p class="mu">Listings are ranked by match score: distance (40), time to collect (25), capacity (20) and food type accepted (15).</p>
+<div id="list" style="margin-top:14px"></div></section>
+<section id="v-volunteer" hidden><h2>Pickups to run</h2><p class="mu">Once a donor confirms a handover, it appears here. Collect it, then mark it delivered.</p><details class="card" id="vreg" open style="margin-bottom:14px"><summary id="vsum" style="font-weight:700;cursor:pointer">Register as a volunteer</summary><div style="margin-top:14px"><label>Your name<input id="vrn" autocomplete="name"></label><label>Phone<input id="vrp" type="tel" autocomplete="tel"></label><label>Area you can cover<select id="vra"></select></label><label>How you travel<select id="vrt"><option>Walking</option><option>Bike</option><option>Car or van</option></select></label><p id="vrerr" role="alert" style="color:var(--bad);font-weight:600;margin:0 0 8px"></p><button id="vrg" type="button">Save and register</button></div></details>
+<div id="vlist" style="margin-top:14px"></div></section>
+<section id="v-impact" hidden>
+<h2>Impact so far</h2><p class="mu">A donation counts only after the handover is confirmed and the food is delivered.</p>
+<div class="stats" id="stats"></div>
+<div class="card"><h3>Where donations are right now</h3><div id="bars"></div></div></section>
+<footer><p>The assistant and the matching run in your browser: keyword-based language parsing and a weighted score. A production version would swap in an LLM or trained model behind a Flask API. Listings are saved only in this browser.</p><button class="ghost" id="rs" type="button">Reset demo data</button></footer>
+</main>
+<script>
+const $=s=>document.querySelector(s),H=36e5;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const AREAS={'North Campus':[4,0],'City Centre':[5,5],'East Market':[11,6],'South Hostel':[6,12]};
+const NGOS=[{id:'hope',name:'Hope Shelter',area:'City Centre',cap:60,ok:['Cooked meal','Bakery','Packaged']},{id:'anna',name:'Anna Daan Trust',area:'East Market',cap:120,ok:['Cooked meal','Bakery','Packaged','Fresh produce','Dairy']},{id:'steps',name:'Little Steps Home',area:'South Hostel',cap:40,ok:['Bakery','Packaged','Fresh produce']}];
+const ST=['Listed','Requested','Confirmed','Collected','Delivered'],AC=['','Confirm handover','Mark collected','Mark delivered'];
+const dist=(a,b)=>Math.hypot(AREAS[a][0]-AREAS[b][0],AREAS[a][1]-AREAS[b][1]);
+const fmtH=h=>h>=24?Math.floor(h/24)+' d '+Math.round(h%24)+' h':h>=1?(Math.round(h*10)/10)+' h':Math.max(1,Math.round(h*60))+' min';
+/* ---- AI listing assistant: language parsing + food-safety rules ---- */
+const TYPES=[[/sealed|unopened|canned|tinned|packaged|cereal|flour|pulses/,'Packaged',168],[/biryani|rice|curry|dal|sambar|pasta|noodle|roti|chapati|sabzi|khichdi|pulao|meal|lunch|dinner|cooked/,'Cooked meal',4],[/milk|curd|yogurt|paneer|cheese|butter/,'Dairy',4],[/bread|bun|cake|pastr|cookie|biscuit|loaf|loaves|croissant/,'Bakery',24],[/apple|banana|fruit|vegetable|tomato|onion|potato|carrot|salad|greens/,'Fresh produce',48]];
+const ALG={Dairy:/milk|curd|raita|yogurt|paneer|cheese|butter|cream|kheer/,Gluten:/wheat|bread|roti|chapati|pasta|noodle|cake|bun|biscuit|flour|cookie|pastr/,Nuts:/\bnuts?\b|peanut|almond|cashew|pista/,Egg:/\begg/,Seafood:/fish|prawn|shrimp/,Soy:/\bsoy/};
+const BAD=/half[- ]eaten|mou?ld|stale|smell|overnight|yesterday|left out|already served/;
+function analyze(raw){
+ const t=raw.toLowerCase().trim();if(!t)return null;
+ const m=TYPES.find(r=>r[0].test(t));let c=m?m[1]:'Other',h=m?m[2]:12;
+ if(c==='Bakery'&&/pack/.test(t)){c='Packaged';h=168}
+ const q=t.match(/(\d+)\s*(?:x\s*)?(?:servings?|plates?|meals?|packets?|boxes|people|persons|pieces|loaves|portions)/),kg=t.match(/(\d+(?:\.\d+)?)\s*kg/);
+ let sv=q?+q[1]:kg?Math.round(kg[1]*2.5):0;
+ const a=t.match(/(\d+(?:\.\d+)?)\s*(?:h|hr|hrs|hours?)\s*ago/),mi=t.match(/(\d+)\s*(?:min|mins|minutes?)\s*ago/),age=a?+a[1]:mi?mi[1]/60:0,left=h-age,n=[];let v='ok';
+ let it=raw.trim().split(/[,.;\n]|\bcooked\b|\bprepared\b|\bbaked\b/i)[0].replace(/^\s*\d+(\.\d+)?\s*(kg|\w+)?\s*(of\s+)?/i,'').trim()||c;it=it[0].toUpperCase()+it.slice(1,50);
+ if(BAD.test(t)){v='bad';n.push('This sounds stale, half-eaten or left out. Food like this cannot be listed.')}
+ else if(left<=0){v='bad';n.push('Prepared too long ago. '+c+' stays safe for about '+fmtH(h)+'.')}
+ else{
+  if(c==='Other'){v='warn';n.push('Food type unclear. Add a word like rice, bread or fruit.')}
+  if(!sv){v='warn';n.push('No quantity found. Add something like “30 plates”.')}
+  if(/leftover|opened/.test(t)){v='warn';n.push('Confirm the food was kept covered and never served.')}
+  if(left<1.5){v='warn';n.push('Under 90 minutes left. Pickup has to be quick.')}
+  if(!a&&!mi&&(c==='Cooked meal'||c==='Dairy'))n.push('No prep time found, so we assumed it was just made. Add “cooked 2 hours ago” for a precise deadline.')}
+ return{it,c,sv,al:Object.keys(ALG).filter(k=>ALG[k].test(t)),left,v,n,safeBy:Date.now()+left*H}}
+/* ---- Smart matching: weighted score per NGO ---- */
+function score(l,n){const d=dist(l.area,n.area),tl=(l.safeBy-Date.now())/H,tr=d/20;
+ const px=Math.max(0,1-d/15),tm=tl>tr+.5?1:tl>tr?.5:0,qt=l.sv<=n.cap?1:n.cap/l.sv,ct=n.ok.includes(l.cat)?1:0;
+ return{s:Math.round(40*px+25*tm+20*qt+15*ct),tm,w:[[d.toFixed(1)+' km away',px>.4],[tm===1?'Reachable in time':tm?'Tight on time':'Too far to collect in time',tm>0],[qt===1?'Fits your capacity':'Above your capacity',qt===1],[ct?'You accept '+l.cat.toLowerCase():'Not a type you accept',!!ct]]}}
+/* ---- data ---- */
+let L=[];
+const save=()=>{try{localStorage.setItem('fb1',JSON.stringify(L))}catch(e){}};
+function seed(){const n=Date.now();return[{id:1,item:'Veg biryani and raita',cat:'Cooked meal',sv:40,al:['Dairy'],donor:'Sunrise Hostel Mess',area:'City Centre',safeBy:n+3*H,st:0},{id:2,item:'Whole wheat bread loaves',cat:'Bakery',sv:25,al:['Gluten'],donor:'Daily Bakes',area:'East Market',safeBy:n+20*H,st:0},{id:3,item:'Sealed biscuit packets',cat:'Packaged',sv:120,al:['Gluten'],donor:'Campus Canteen',area:'North Campus',safeBy:n+150*H,st:0},{id:4,item:'Mixed vegetables',cat:'Fresh produce',sv:30,al:[],donor:'Fresh Mart',area:'South Hostel',safeBy:n+30*H,st:4,ngo:'steps'}]}
+function load(){try{L=JSON.parse(localStorage.getItem('fb1')||'null')}catch(e){L=null}if(!Array.isArray(L)){L=seed();save()}}
+/* ---- views ---- */
+let cur=null;const EX=['40 plates of veg biryani and raita, cooked 1 hour ago','25 loaves of whole wheat bread, baked this morning','12 plates of rice and dal from yesterday night, left out'];let ei=0;
+function renderAI(r){r=cur=r||analyze($('#dt').value);const p=$('#ai');
+ if(!r){p.innerHTML='<h3>Assistant’s reading</h3><p class="mu">Start typing and the quantity, food type, allergens and safe-to-collect time appear here.</p>';return}
+ const lab={ok:'Looks good to list',warn:'Check these before listing',bad:'Cannot be listed'}[r.v];
+ p.innerHTML=`<div class="vd ${r.v}">${lab}${r.ai?' (read by Claude)':''}</div><dl><dt>Food</dt><dd>${esc(r.it)}</dd><dt>Type</dt><dd>${r.c}</dd><dt>Servings</dt><dd><input id="sv" type="number" min="1" aria-label="Servings" value="${r.sv||''}"></dd><dt>Safe for</dt><dd>${r.left>0?fmtH(r.left):'Expired'}</dd><dt>Allergens</dt><dd class="ch" style="margin:0">${r.al.length?r.al.map(a=>`<i class="al">${a}</i>`).join(''):'None detected'}</dd></dl>${r.n.length?`<ul class="nt">${r.n.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}<p id="err" role="alert" style="color:var(--bad);font-weight:600;margin:0 0 8px"></p><button id="pub" ${r.v==='bad'||!r.sv?'disabled':''}>Publish listing</button>`}
+function renderL(){const n=NGOS.find(x=>x.id===$('#ngo').value)||NGOS[0],q=$('#q').value.toLowerCase(),now=Date.now();
+ $('#ninfo').textContent=`${n.name} is in ${n.area}, handles up to ${n.cap} meals and accepts ${n.ok.join(', ').toLowerCase()}.`;
+ const rows=L.filter(l=>(l.item+l.cat+l.donor+l.area).toLowerCase().includes(q)).map(l=>({l,m:score(l,n),ex:l.st===0&&l.safeBy<now,open:l.st===0&&l.safeBy>=now}));
+ rows.sort((a,b)=>(b.open-a.open)||b.m.s-a.m.s);
+ $('#list').innerHTML=rows.map(({l,m,ex,open})=>{const by=NGOS.find(x=>x.id===l.ngo);
+  const act=ex?'<small class="mu">Expired</small>':l.st===4?'<small class="done">Completed</small>':l.st===0&&(l.dec||[]).includes(n.id)?'<small class="mu">Donor declined your request</small>':l.st===0?`<button data-id="${l.id}" ${m.tm?'':'disabled title="Too far to collect before the safe time"'}>Request for ${n.name}</button>`:'<small class="mu">In progress</small>';
+  return `<article class="lc"><div class="tag ${open?'':'off'}"><b>${open?m.s+'%':'—'}</b><span>${open?'match for you':ex?'Expired':ST[l.st]}</span></div><div><h3>${esc(l.item)}</h3><p class="mu">${esc(l.donor)} in ${esc(l.area)}. ${l.sv} servings, ${l.cat.toLowerCase()}.${l.st<3&&!ex?' Collect within '+fmtH((l.safeBy-now)/H)+'.':''}</p><div class="ch">${l.al.map(a=>`<i class="al">${a}</i>`).join('')}${open?m.w.map(([t,ok])=>`<i class="${ok?'ok':'no'}">${t}</i>`).join(''):''}</div><div class="st">${ST.map((s,i)=>`<span class="${i<=l.st?'on':''}" title="${s}"></span>`).join('')}</div><div class="row"><small class="mu">${ST[l.st]}${by&&l.st>0?' by '+by.name:''}</small>${act}</div></div></article>`}).join('')||'<p class="mu">No listings match. Try another search, or donate something first.</p>'}
+function renderI(){const d=L.filter(l=>l.st===4),meals=d.reduce((a,l)=>a+l.sv,0);
+ $('#stats').innerHTML=[[meals,'meals redistributed'],[d.length,'donations completed'],[L.filter(l=>l.st>0&&l.st<4).length,'donations in progress'],['~'+Math.round(meals*.4)+' kg','food kept from waste (estimate at 0.4 kg per meal)']].map(([a,b])=>`<div class="card stat"><b>${a}</b><span>${b}</span></div>`).join('');
+ $('#bars').innerHTML=ST.map((s,i)=>{const c=L.filter(l=>l.st===i).length;return `<div class="bar"><span>${s}</span><div><i style="width:${L.length?c/L.length*100:0}%"></i></div><b>${c}</b></div>`}).join('')}
+const IC={utensils:'<path d="M5 3v8a2 2 0 0 0 2 2v8"/><path d="M9 3v8"/><path d="M17 3c-2 2-3 4-3 7h3v11"/>',home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',user:'<circle cx="12" cy="7" r="3.5"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>',pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',search:'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',check:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',heart:'<path d="M12 21s-7-4.6-9.2-9A5 5 0 0 1 12 6a5 5 0 0 1 9.2 6C19 16.4 12 21 12 21z"/>'};
+function icons(){document.querySelectorAll('[data-i]').forEach(e=>{e.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+IC[e.dataset.i]+'</svg>'})}
+function cu(e,to){if(matchMedia('(prefers-reduced-motion:reduce)').matches||!to){e.textContent=to;return}const t0=performance.now();(function f(t){const p=Math.min(1,(t-t0)/800);e.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)}
+function renderH(){const now=Date.now(),d=L.filter(l=>l.st===4).reduce((a,l)=>a+l.sv,0),o=L.filter(l=>l.st===0&&l.safeBy>now).reduce((a,l)=>a+l.sv,0),p=L.filter(l=>l.st>0&&l.st<4).length;
+ $('#hs').innerHTML=[[d,'meals redistributed'],[o,'servings available to claim right now'],[p,'donations on their way']].map(([n,t])=>`<div class="card stat"><b data-n="${n}">0</b><span>${t}</span></div>`).join('');
+ document.querySelectorAll('#hs b').forEach(b=>cu(b,+b.dataset.n))}
+function tasks(el,sts,act,empty){el.innerHTML=L.filter(l=>sts.includes(l.st)).map(l=>{const by=NGOS.find(x=>x.id===l.ngo);return `<article class="lc"><div class="tag off"><b>${l.st}/4</b><span>${ST[l.st]}</span></div><div><h3>${esc(l.item)}</h3><p class="mu">From ${esc(l.donor)} in ${esc(l.area)}${by?' to '+by.name+' in '+by.area+', '+dist(l.area,by.area).toFixed(1)+' km':''}. ${l.sv} servings.${l.st>=2&&l.ph?' Donor phone: '+esc(l.ph)+'.':''}${l.st>=2&&by&&by.ph?' NGO phone: '+esc(by.ph)+'.':''}${l.vol?' Volunteer: '+esc(l.vol)+', '+esc(l.vph)+'.':''}</p><div class="st">${ST.map((s,i)=>`<span class="${i<=l.st?'on':''}" title="${s}"></span>`).join('')}</div><div class="row"><small class="mu">${ST[l.st]}</small>${act.includes(l.st)?`<span style="display:flex;gap:8px">${l.st===1?`<button class="ghost" data-dec="${l.id}">Decline</button>`:''}<button data-id="${l.id}">${AC[l.st]}</button></span>`:'<small class="mu">Waiting on the volunteer</small>'}</div></div></article>`}).join('')||`<p class="mu">${empty}</p>`}
+const renderD=()=>tasks($('#dlist'),[1,2,3],[1],'Nothing to confirm yet. When an NGO requests your food, it shows up here.');
+const renderV=()=>{if(!P.v){$('#vlist').innerHTML='<p class="mu">Register above to see pickups and take them on.</p>';return}tasks($('#vlist'),[2,3],[2,3],'No pickups yet. They appear here once a donor confirms a handover.')};
+const V=['home','donate','listings','volunteer','impact'];
+function route(){const k=V.includes((location.hash||'').slice(1))?location.hash.slice(1):'home';
+ V.forEach(x=>{$('#v-'+x).hidden=x!==k});document.querySelectorAll('nav a').forEach(a=>a.setAttribute('aria-current',a.hash==='#'+k?'page':'false'));
+ if(k==='home')renderH();if(k==='donate')renderD();if(k==='listings')renderL();if(k==='volunteer')renderV();if(k==='impact')renderI()}
+/* ---- wiring ---- */
+load();
+$('#da').innerHTML=$('#ra').innerHTML=Object.keys(AREAS).map(a=>`<option>${a}</option>`).join('');
+try{NGOS.push(...JSON.parse(localStorage.getItem('fb2')||'[]'))}catch(e){}
+const fillN=()=>{$('#ngo').innerHTML=NGOS.map(n=>`<option value="${n.id}">${n.name}</option>`).join('')};fillN();
+$('#rk').innerHTML=['Cooked meal','Bakery','Packaged','Fresh produce','Dairy'].map(c=>`<label style="display:inline-flex;gap:6px;align-items:center;margin:0 14px 6px 0;font-weight:400"><input type="checkbox" value="${c}" checked style="width:auto;margin:0">${c}</label>`).join('');
+$('#rg').onclick=()=>{const nm=$('#rn').value.replace(/[<>&"']/g,'').trim(),ph=$('#rp').value.trim(),cap=+$('#rc').value,ok=[...document.querySelectorAll('#rk input:checked')].map(i=>i.value),er=$('#rerr'),bad=m=>{er.textContent=m};
+ if(nm.length<3)return bad('Enter your organization name, at least 3 letters.');
+ if(NGOS.some(n=>n.name.toLowerCase()===nm.toLowerCase()))return bad('That organization is already registered.');
+ if(!/^\+?[\d\s-]{8,15}$/.test(ph))return bad('Enter a valid phone number, for example 98765 43210.');
+ if(!(cap>=1))return bad('Enter how many meals you can take per pickup.');
+ if(!ok.length)return bad('Choose at least one type of food you accept.');
+ const n={id:'c'+Date.now(),name:nm,area:$('#ra').value,cap,ok,ph};NGOS.push(n);
+ try{localStorage.setItem('fb2',JSON.stringify(NGOS.filter(x=>x.id[0]==='c')))}catch(e){}
+ bad('');fillN();$('#ngo').value=n.id;$('#reg').open=false;$('#rn').value=$('#rp').value='';renderL()};
+let tmr,seq=0;
+async function llm(){const txt=$('#dt').value.trim(),my=++seq;if(!txt||!cur)return;
+ try{const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:txt})});if(!res.ok||my!==seq)return;
+ const j=await res.json(),b=cur.v==='bad',left=j.safe_hours_total-j.hours_since_prepared,v=b||left<=0?'bad':j.verdict;
+ renderAI({it:j.item||cur.it,c:j.category,sv:j.servings||cur.sv,al:j.allergens,left,v,n:b?cur.n:(left<=0?['Past its safe time.']:j.notes),safeBy:Date.now()+left*H,ai:1})}catch(e){}}
+$('#dt').oninput=()=>{renderAI();clearTimeout(tmr);tmr=setTimeout(llm,700)};$('#q').oninput=$('#ngo').onchange=renderL;
+$('#ex').onclick=()=>{$('#dt').value=EX[ei++%EX.length];renderAI()};
+$('#ai').addEventListener('input',e=>{if(e.target.id==='sv'){cur.sv=+e.target.value;$('#pub').disabled=cur.v==='bad'||!(cur.sv>0)}});
+$('#ai').addEventListener('click',e=>{if(e.target.id!=='pub'||!cur)return;const nm=$('#dn').value.trim(),ph=$('#dp').value.trim(),er=$('#err'),bad=m=>{er.textContent=m};if(!P.d){bad('Register as a donor first. The form is at the top of this page.');$('#dreg').open=true;$('#dreg').scrollIntoView({block:'center'});return}if(nm.length<2){bad('Enter your name or kitchen name so the NGO knows who is donating.');$('#dn').focus();return}if(!/^\+?[\d\s-]{8,15}$/.test(ph)){bad('Enter a valid phone number. It is shared only after you confirm a handover.');$('#dp').focus();return}if(!(cur.sv>0)){bad('Enter how many servings there are.');return}
+ L.unshift({id:Date.now(),item:cur.it,cat:cur.c,sv:cur.sv,al:cur.al,donor:nm,ph:ph,area:$('#da').value,safeBy:cur.safeBy,st:0});
+ save();$('#dt').value='';renderAI();location.hash='#listings'});
+document.onclick=e=>{const b=e.target.closest('button[data-id]');if(!b)return;const l=L.find(x=>x.id==b.dataset.id);if(!l)return;if(l.st===0)l.ngo=$('#ngo').value;if(l.st===2&&P.v){l.vol=P.v.nm+' ('+P.v.tr+')';l.vph=P.v.ph}l.st++;save();route()};
+$('#rs').onclick=()=>{L=seed();save();renderAI();route()};
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-dec]');if(!b)return;const l=L.find(x=>x.id==b.dataset.dec);if(!l)return;(l.dec=l.dec||[]).push(l.ngo);l.st=0;l.ngo=null;save();route()});
+let P={};try{P=JSON.parse(localStorage.getItem('fb3')||'{}')||{}}catch(e){P={}}
+const sp=()=>{try{localStorage.setItem('fb3',JSON.stringify(P))}catch(e){}},PH=/^\+?[\d\s-]{8,15}$/,cl=s=>s.replace(/[<>&"']/g,'').trim();
+function prof(){const d=P.d,v=P.v;$('#dra').innerHTML=$('#vra').innerHTML=Object.keys(AREAS).map(a=>`<option>${a}</option>`).join('');
+ if(d){$('#dn').value=$('#drn').value=d.nm;$('#dp').value=$('#drp').value=d.ph;$('#da').value=$('#dra').value=d.ar}
+ $('#dn').readOnly=$('#dp').readOnly=!!d;$('#dsum').textContent=d?'Registered as '+d.nm+' (edit details)':'Register as a donor';$('#dreg').open=!d;
+ if(v){$('#vrn').value=v.nm;$('#vrp').value=v.ph;$('#vra').value=v.ar;$('#vrt').value=v.tr}
+ $('#vsum').textContent=v?'Registered as '+v.nm+' (edit details)':'Register as a volunteer';$('#vreg').open=!v}
+$('#drg').onclick=()=>{const nm=cl($('#drn').value),ph=$('#drp').value.trim(),er=$('#drerr');if(nm.length<2){er.textContent='Enter your name or kitchen name.';return}if(!PH.test(ph)){er.textContent='Enter a valid phone number, for example 98765 43210.';return}P.d={nm,ph,ar:$('#dra').value};sp();er.textContent='';prof();renderAI()};
+$('#vrg').onclick=()=>{const nm=cl($('#vrn').value),ph=$('#vrp').value.trim(),er=$('#vrerr');if(nm.length<2){er.textContent='Enter your name.';return}if(!PH.test(ph)){er.textContent='Enter a valid phone number, for example 98765 43210.';return}P.v={nm,ph,ar:$('#vra').value,tr:$('#vrt').value};sp();er.textContent='';prof();renderV()};
+addEventListener('hashchange',route);icons();prof();renderAI();route();
+setInterval(()=>{if(!$('#v-listings').hidden)renderL();if(!$('#v-donate').hidden)renderD();if(!$('#v-volunteer').hidden)renderV()},30000);
+</script></body></html>
